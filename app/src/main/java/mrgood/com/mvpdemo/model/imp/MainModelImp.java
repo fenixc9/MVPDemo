@@ -1,10 +1,9 @@
 package mrgood.com.mvpdemo.model.imp;
 
 import io.reactivex.Observable;
-import mrgood.com.mvpdemo.content.UrlContent;
+import mrgood.com.mvpdemo.constent.UrlContent;
 import mrgood.com.mvpdemo.model.MainModel;
 import mrgood.com.mvpdemo.util.MyRetrofit;
-import mrgood.com.mvpdemo.util.RetrofitService;
 
 /**
  * Created by Administrator on 2017/1/24 0024.
@@ -19,6 +18,8 @@ public class MainModelImp implements MainModel {
     }
     @Override
     public Observable<String> httpsTest(){
-        return myRetrofit.getHttpService(UrlContent.Test12306.HOST).SSLTest();
+        return myRetrofit.
+                getHttpsByCerNameService(UrlContent.Test12306.HOST,"srca.cer")
+                .SSLTest();
     }
 }

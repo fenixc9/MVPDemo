@@ -1,9 +1,7 @@
 package mrgood.com.mvpdemo.ui.activity;
 
 import android.os.Bundle;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import butterknife.Bind;
@@ -44,8 +42,6 @@ public class MainActivity
         lsl.setErrorView(R.layout.loaderror);
         lsl.setLoadingView(R.layout.loadingstate);
         wb.getSettings().setDefaultTextEncodingName("UTF-8");
-        wb.setWebViewClient(new WebViewClient());
-        wb.setWebChromeClient(new WebChromeClient());
     }
 
 

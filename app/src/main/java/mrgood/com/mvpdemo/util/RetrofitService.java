@@ -1,9 +1,8 @@
 package mrgood.com.mvpdemo.util;
 
 import io.reactivex.Observable;
-import mrgood.com.mvpdemo.content.UrlContent;
+import mrgood.com.mvpdemo.constent.UrlContent;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2017/1/24 0024.

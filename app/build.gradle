@@ -34,4 +34,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit-converters:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }
