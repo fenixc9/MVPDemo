@@ -42,12 +42,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MyRetrofit {
     private volatile static MyRetrofit myRetrofit;
-    private Retrofit retrofit;
-    private static OkHttpClient.Builder builder;
-    private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 1;
+    public static OkHttpClient.Builder builder = new OkHttpClient.Builder();
+    public static final long CACHE_STALE_SEC = 60 * 60 * 24 * 1;
     private static final long CACHE_SIZE =  1024 * 1024 * 100;
-    private static final String CACHE_CONTROL_ONLY = "only-if-cached, max-stale=" + CACHE_STALE_SEC;;
-    private static final String CACHE_CONTROL_NETWORK = "max-age=0";
 
     public static MyRetrofit getSingleton() {
         if (myRetrofit == null) {
@@ -63,12 +60,11 @@ public class MyRetrofit {
     private MyRetrofit() {}
 
     private static void initOkHttp() {
-        builder = new OkHttpClient.Builder();
         File cacheFile = new File(MyApp.getContext().getCacheDir(),
                 "HttpCache"); // 指定缓存路径
-        Cache cache = new Cache(cacheFile, CACHE_SIZE); // 指定缓存大小100Mb
+        Cache cache = new Cache(cacheFile, CACHE_SIZE);
         builder.cache(cache);
-        builder.addInterceptor(new Interceptor() {
+        Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 //请求拦截
@@ -78,9 +74,9 @@ public class MyRetrofit {
                             .cacheControl(CacheControl.FORCE_CACHE).build();
                     Log.d("mylog", "intercept: no network");
                 }
+                //响应拦截
                 Response originalResponse = chain.proceed(request);
                 if (NetCheckUtil.isConnected(MyApp.getContext())) {
-                    //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
                     String cacheControl = request.cacheControl().toString();
                     return originalResponse.newBuilder()
                             .header("Cache-Control", cacheControl)
@@ -91,10 +87,15 @@ public class MyRetrofit {
                             .removeHeader("Pragma").build();
                 }
             }
-        });
+        };
+
+        //应用拦截
+        builder.addInterceptor(cacheInterceptor);
+        //网络拦截
+        builder.addNetworkInterceptor(cacheInterceptor);
 
 
-        //自定义日志策略
+        //自定义日志策略release版不拦截
         if (BuildConfig.DEBUG) {
             Interceptor LoggingInterceptor = new Interceptor() {
 
@@ -118,46 +119,11 @@ public class MyRetrofit {
     /**
      * http请求
      * @param url
-     * @return
+     * @return call、observable或flowable对象
      */
     public RetrofitService getHttpService(String url) {
         initOkHttp();
-        return getRetrofitService(url);
-    }
-
-    /**
-     * 自签名https 证书存放assets
-     * @param url
-     * @param name
-     * @return
-     */
-    public RetrofitService getHttpsByCerNameService(String url,String name) {
-        initOkHttp();
-        CerManager.addCerFile(builder,name);
-        return getRetrofitService(url);
-    }
-
-    /**
-     *
-     * 自签名https 证书rfc导入
-     * @param url
-     * @param str
-     * @return
-     */
-    public RetrofitService getHttpsByRFCService(String url,String str) {
-        initOkHttp();
-        CerManager.addCerStr(builder,str);
-        return getRetrofitService(url);
-    }
-
-
-    /**
-     * 传入host生成call、observable或flowable对象
-     * @param url
-     * @return
-     */
-    private RetrofitService getRetrofitService(String url) {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -168,9 +134,4 @@ public class MyRetrofit {
     }
 
 
-
-
-    public static String getCacheControl() {
-        return NetCheckUtil.isConnected(MyApp.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_ONLY;
-    }
 }

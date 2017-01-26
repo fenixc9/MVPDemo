@@ -1,6 +1,7 @@
 package mrgood.com.mvpdemo.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +59,7 @@ public class CerManager {
     }
 
     /**
-     * 将证书存放在asset中导入
+     * 将证书以base64导入
      *
      * @param builder 所需的builder
      * @param str     rfc导出  new Buffer().writeUtf8(key).inputStream()
@@ -75,7 +76,6 @@ public class CerManager {
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             builder.sslSocketFactory(sslSocketFactory, trustManager);
         } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
         return builder;
     }

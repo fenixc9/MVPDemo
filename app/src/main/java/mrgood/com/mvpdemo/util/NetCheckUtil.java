@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import mrgood.com.mvpdemo.constent.MyApp;
+
 /**
  * Created by Administrator on 2017/1/26 0026.
  */
@@ -16,6 +18,11 @@ public class NetCheckUtil {
     private NetCheckUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
+
+    private static final String CACHE_CONTROL_ONLY = "only-if-cached, max-stale=" + MyRetrofit.CACHE_STALE_SEC;;
+    private static final String CACHE_CONTROL_NETWORK = "max-age=0";
+
 
     /**
      * 判断网络是否连接
@@ -65,5 +72,12 @@ public class NetCheckUtil {
         intent.setComponent(cm);
         intent.setAction("android.intent.action.VIEW");
         activity.startActivityForResult(intent, 0);
+    }
+
+
+
+
+    private static String getCacheControl() {
+        return NetCheckUtil.isConnected(MyApp.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_ONLY;
     }
 }

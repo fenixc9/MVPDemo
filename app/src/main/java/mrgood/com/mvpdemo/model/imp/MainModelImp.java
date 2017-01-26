@@ -19,7 +19,7 @@ public class MainModelImp implements MainModel {
     @Override
     public Observable<String> httpsTest(){
         return myRetrofit.
-                getHttpsByCerNameService(UrlContent.Test12306.HOST,"srca.cer")
+                getHttpService(UrlContent.Test12306.HOST)
                 .SSLTest();
     }
 }

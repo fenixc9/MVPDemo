@@ -2,8 +2,13 @@ package mrgood.com.mvpdemo.constent;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.squareup.leakcanary.LeakCanary;
+
+import mrgood.com.mvpdemo.util.CerManager;
+import mrgood.com.mvpdemo.util.MyRetrofit;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Administrator on 2017/1/24 0024.
@@ -15,13 +20,14 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
+        //添加证书
+        CerManager.addCerFile(MyRetrofit.builder,"srca.cer");
         if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
             return;
         }
         LeakCanary.install(this);
-        context = getApplicationContext();
+
     }
 
     public static Context getContext(){

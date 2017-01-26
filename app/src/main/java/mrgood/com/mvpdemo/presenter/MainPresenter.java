@@ -29,25 +29,25 @@ public class MainPresenter extends BasePresenter {
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                  //      Log.d("mylog", "onSubscribe: ");
+                        Log.d("mylog", "onSubscribe: ");
                         vi.loadingState();
                     }
 
                     @Override
                     public void onNext(String s) {
-                    //    Log.d("mylog", "onNext: ");
+                        Log.d("mylog", "onNext: ");
                         vi.successState(s);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                   //     Log.d("mylog", "onError:e "+e.toString());
-                        vi.emptyState();
+                        Log.d("mylog", "onError:e "+e.toString());
+                        vi.errorState(e);
                     }
 
                     @Override
                     public void onComplete() {
-                    //    Log.d("mylog", "onComplete: ");
+                        Log.d("mylog", "onComplete: ");
                     }
                 });
     }
