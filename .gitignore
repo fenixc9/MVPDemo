@@ -12,8 +12,6 @@ app/src/test/
 gradle/
 gradlew
 gradlew.bat
-bin/
-gen/
 *.log
 proguard/
 gradle.properties
