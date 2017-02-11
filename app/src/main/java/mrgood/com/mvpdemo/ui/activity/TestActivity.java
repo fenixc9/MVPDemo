@@ -8,23 +8,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mrgood.com.mvpdemo.R;
-import mrgood.com.mvpdemo.presenter.MainPresenter;
+import mrgood.com.mvpdemo.presenter.TestPresenter;
 import mrgood.com.mvpdemo.view.LoadStateLayout;
-import mrgood.com.mvpdemo.viewinterface.MainViewInterface;
+import mrgood.com.mvpdemo.viewinterface.TestViewInterface;
 
-public class MainActivity
+public class TestActivity
         //extends Activity
-        extends BaseActivity
-        implements MainViewInterface {
-
+        extends LoadStateActivity
+        implements TestViewInterface {
+//
 
     @Bind(R.id.btn)
     Button btn;
     @Bind(R.id.wb)
     WebView wb;
-    @Bind(R.id.lsl)
-    LoadStateLayout lsl;
-    private MainPresenter presenter;
+
+    private TestPresenter presenter;
 
 
 
@@ -32,17 +31,25 @@ public class MainActivity
     protected void init(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        presenter = new MainPresenter(this);
-        initView();
+        presenter = new TestPresenter(this);
         presenter.httpsTest();
     }
 
-    private void initView() {
-        lsl.setEmptyView(R.layout.loadempty);
-        lsl.setErrorView(R.layout.loaderror);
-        lsl.setLoadingView(R.layout.loadingstate);
-        wb.getSettings().setDefaultTextEncodingName("UTF-8");
+    @Override
+    public int setErrorlayoutRes() {
+        return R.layout.loaderror;
     }
+
+    @Override
+    public int setEmptylayoutRes() {
+        return R.layout.loadempty;
+    }
+
+    @Override
+    public int setLoadinglayoutRes() {
+        return R.layout.loadingstate;
+    }
+
 
 
     @Override

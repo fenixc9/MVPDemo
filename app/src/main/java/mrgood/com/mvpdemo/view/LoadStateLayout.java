@@ -1,6 +1,7 @@
 package mrgood.com.mvpdemo.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,6 +44,17 @@ public class LoadStateLayout extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+//        if (getChildCount() > 1) {
+//            throw new IllegalStateException("LoadStateLayout can host only one content child for STATE_SUCCESS!");
+//
+//        }
+//        mContentView = getChildAt(0);//获取第0个子View，并设置为ContentView
+//        mContentView.setVisibility(GONE);//默认隐藏
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (getChildCount() > 1) {
             throw new IllegalStateException("LoadStateLayout can host only one content child for STATE_SUCCESS!");
 
@@ -50,7 +62,6 @@ public class LoadStateLayout extends FrameLayout {
         mContentView = getChildAt(0);//获取第0个子View，并设置为ContentView
         mContentView.setVisibility(GONE);//默认隐藏
     }
-
 
     /**
      * 获取当前视图状态

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:showAsAction="always"
+    tools:ignore="AppCompatResource">
+
+
+
+
+    <item android:title="娱乐">
+        <menu android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_camera"
+                android:icon="@mipmap/ic_launcher"
+                android:title="漫画" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@mipmap/ic_launcher"
+                android:title="电影" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@mipmap/ic_launcher"
+                android:title="购物" />
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@mipmap/ic_launcher"
+                android:title="娱乐" />
+        </menu>
+
+    </item>
+    <item android:title="新闻">
+        <menu android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_localnew"
+                android:icon="@mipmap/ic_launcher"
+                android:title="当地新闻" />
+
+            <item
+                android:id="@+id/nav_nationnew"
+                android:icon="@mipmap/ic_launcher"
+                android:title="国内新闻" />
+        </menu>
+
+    </item>
+
+</menu>

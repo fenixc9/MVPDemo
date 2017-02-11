@@ -6,25 +6,23 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import mrgood.com.mvpdemo.util.SystemBarTintManager;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 
 /**
- * Created by Administrator on 2017/1/24 0024.
+ * Created by lh on 2017/1/28 0028.
+ * 沉浸式处理
  */
 
-public abstract class BaseActivity extends Activity {
-
-
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("mylog", "onCreate:BaseActivity ");
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
         changeStatusBar();
@@ -50,11 +48,10 @@ public abstract class BaseActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(this, true);
         }
-        SystemBarTintManager barTintManager = new SystemBarTintManager(this);
-        barTintManager.setStatusBarTintEnabled(true);
-        barTintManager.setNavigationBarTintColor(Color.TRANSPARENT);
-        this.getWindow().getDecorView().setFitsSystemWindows(true);
 
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -62,6 +59,5 @@ public abstract class BaseActivity extends Activity {
         super.onBackPressed();
         finish();
     }
-
 
 }

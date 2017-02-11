@@ -117,7 +117,7 @@ public class MyRetrofit {
     }
 
     /**
-     * http请求
+     * 网络请求
      * @param url
      * @return call、observable或flowable对象
      */
@@ -125,8 +125,8 @@ public class MyRetrofit {
         initOkHttp();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
-                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(builder.build())
                 .build();

@@ -6,20 +6,20 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import mrgood.com.mvpdemo.model.imp.MainModelImp;
-import mrgood.com.mvpdemo.viewinterface.MainViewInterface;
+import mrgood.com.mvpdemo.model.imp.HttpsTestModelImp;
+import mrgood.com.mvpdemo.viewinterface.TestViewInterface;
 
 /**
  * Created by Administrator on 2017/1/24 0024.
  */
 
-public class MainPresenter extends BasePresenter {
-    MainModelImp imp;
-    MainViewInterface vi;
+public class TestPresenter extends BasePresenter  {
+    HttpsTestModelImp imp;
+    TestViewInterface vi;
 
 
-    public MainPresenter(MainViewInterface vi) {
-        this.imp = new MainModelImp();
+    public TestPresenter(TestViewInterface vi) {
+        this.imp = new HttpsTestModelImp();
         this.vi = vi;
     }
 
